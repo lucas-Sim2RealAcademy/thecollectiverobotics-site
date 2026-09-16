@@ -33,7 +33,7 @@ Four images ship with the page and one placeholder remains.
 
 | File | What it is | How it is labeled |
 |---|---|---|
-| `img/rows-render.webp` | Hero. A nursery block from the project's own simulation. | Caption says "Simulation", concept render, not a photograph. |
+| `img/rows-render.webp` | Hero. A block of trees from the project's own simulation. | Caption says "Simulation", concept render, not a photograph. |
 | `img/map-example.webp` | The example tree record on a phone. | Caption says "Example", plus the imagery attribution line. |
 | `img/collect-render.webp` | The ground robot moving down a row. | Caption says "Simulation". |
 | `img/ground-robot-render.webp` | The ground robot in a row, front view. | Caption says "Concept render". |
