@@ -1,0 +1,269 @@
+/* Collective Robotics Inc. one page site. */
+
+:root{
+  --black:#0B0B0C;
+  --ink:#1A1C1E;
+  --muted:#5B6165;
+  --paper:#FFFFFF;
+  --band:#F4F4F2;
+  --hairline:#DDDDD9;
+  --accent:#1F6B43;
+  --accent-hover:#175334;
+  --accent-tint:#E8F1EC;
+}
+
+@font-face{font-family:"Outfit";src:url("fonts/outfit-var.woff2") format("woff2");font-weight:300 700;font-style:normal;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Poppins";src:url("fonts/poppins-600.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap;}
+@font-face{font-family:"Poppins";src:url("fonts/poppins-700.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:"Inter";src:url("fonts/inter-400.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{-webkit-text-size-adjust:100%}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:17px;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+@media (min-width:760px){body{font-size:18px}}
+
+h1,h2,h3{font-family:"Poppins","Inter",system-ui,sans-serif;letter-spacing:-0.01em;margin:0}
+
+a{color:var(--accent)}
+a:hover,a:focus{color:var(--accent-hover)}
+
+.wrap{width:100%;max-width:1060px;margin:0 auto;padding:0 24px}
+
+/* ---------- logo ---------- */
+
+.mark{display:block;color:inherit}
+
+.lockup{display:inline-flex;align-items:center;gap:14px;text-decoration:none;color:var(--black)}
+.lockup .mark{width:34px;height:34px;flex:0 0 auto}
+.lockup .name{
+  font-family:"Outfit",system-ui,sans-serif;
+  font-weight:700;
+  font-size:23px;
+  line-height:1;
+  letter-spacing:0.005em;
+  white-space:nowrap;
+}
+.lockup .name span{font-weight:300;letter-spacing:0.14em}
+
+@media (min-width:760px){
+  .lockup .mark{width:42px;height:42px}
+  .lockup .name{font-size:27px}
+}
+
+@media (max-width:430px){
+  .wrap{padding:0 18px}
+  .lockup{gap:10px}
+  .lockup .mark{width:28px;height:28px}
+  .lockup .name{font-size:19px}
+  .header-link{font-size:15px}
+}
+
+/* ---------- header ---------- */
+
+.site-header{
+  border-bottom:1px solid var(--hairline);
+  background:var(--paper);
+}
+.site-header .wrap{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  min-height:72px;
+}
+.header-link{
+  font-size:16px;
+  font-weight:400;
+  text-decoration:none;
+  color:var(--accent);
+  padding:12px 0;
+}
+.header-link:hover{color:var(--accent-hover);text-decoration:underline}
+
+/* ---------- hero ---------- */
+
+.hero{background:var(--black);color:var(--paper);padding:56px 0 64px}
+.hero .hero-mark{width:64px;height:64px;color:var(--paper);margin-bottom:28px}
+.hero h1{
+  font-weight:700;
+  font-size:clamp(34px,7.4vw,60px);
+  line-height:1.08;
+  max-width:16ch;
+  margin:0 0 20px;
+}
+.hero p.sub{
+  margin:0 0 32px;
+  max-width:54ch;
+  color:#E6E7E5;
+}
+.hero .place{margin:16px 0 0;font-size:15px;color:#9AA0A2}
+
+.btn{
+  display:inline-block;
+  background:var(--accent);
+  color:#fff;
+  text-decoration:none;
+  font-family:"Poppins","Inter",sans-serif;
+  font-weight:600;
+  font-size:18px;
+  line-height:1.2;
+  padding:17px 30px;
+  border-radius:4px;
+  min-height:44px;
+}
+.btn:hover,.btn:focus{background:var(--accent-hover);color:#fff}
+
+.hero-figure{margin-top:44px}
+
+/* ---------- sections ---------- */
+
+section{padding:64px 0}
+section.band{background:var(--band);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline)}
+section h2{font-weight:600;font-size:clamp(26px,4.2vw,34px);line-height:1.2;margin:0 0 16px}
+section p.lede{margin:0 0 36px;max-width:60ch;color:var(--muted)}
+section p{max-width:64ch}
+
+/* ---------- cards ---------- */
+
+.cards{display:grid;grid-template-columns:1fr;gap:20px;margin:0 0 32px}
+@media (min-width:760px){.cards{grid-template-columns:repeat(3,1fr)}}
+.card{
+  background:var(--paper);
+  border:1px solid var(--hairline);
+  border-radius:6px;
+  padding:28px 24px;
+}
+section.band .card{background:var(--paper)}
+.card h3{font-weight:600;font-size:20px;margin:0 0 10px}
+.card p{margin:0}
+.closing{font-size:inherit;margin:0;max-width:62ch}
+
+/* ---------- steps ---------- */
+
+.steps{display:grid;grid-template-columns:1fr;gap:30px;margin:0}
+.step{padding-top:20px;border-top:1px solid var(--hairline)}
+.step:first-child{border-top:0;padding-top:0}
+.step h3{font-weight:600;font-size:20px;margin:0 0 8px;line-height:1.35}
+.step h3 .num{
+  font-family:"Outfit",sans-serif;
+  font-weight:700;
+  color:var(--accent);
+  margin-right:2px;
+}
+.step p{margin:0}
+
+/* ---------- next section with motif ---------- */
+
+.next{position:relative;overflow:hidden}
+.next .motif{
+  position:absolute;
+  right:-190px;
+  top:50%;
+  transform:translateY(-50%);
+  width:560px;height:560px;
+  color:var(--band);
+  pointer-events:none;
+  z-index:0;
+}
+.next .wrap{position:relative;z-index:1}
+.next .intro{
+  font-family:"Poppins",sans-serif;
+  font-weight:600;
+  font-size:clamp(19px,2.6vw,23px);
+  line-height:1.4;
+  color:var(--ink);
+  max-width:40ch;
+  margin:0 0 20px;
+}
+
+/* ---------- photo placeholders ---------- */
+
+figure.shot{margin:0;max-width:760px}
+figure.shot .plate{
+  border:1px solid var(--hairline);
+  background:
+    repeating-linear-gradient(135deg,rgba(0,0,0,0.018) 0 14px,rgba(0,0,0,0) 14px 28px),
+    var(--band);
+  border-radius:6px;
+  aspect-ratio:16/9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--muted);
+}
+figure.shot .plate .mark{width:56px;height:56px;opacity:0.18;color:var(--black)}
+figure.shot figcaption{
+  margin-top:10px;
+  font-size:15px;
+  line-height:1.5;
+  color:var(--muted);
+}
+figure.shot figcaption b{
+  font-family:"Inter",sans-serif;
+  font-weight:500;
+  font-size:13px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+  display:block;
+  margin-bottom:4px;
+}
+.hero figure.shot .plate{
+  border-color:#2A2C2E;
+  background:
+    repeating-linear-gradient(135deg,rgba(255,255,255,0.03) 0 14px,rgba(255,255,255,0) 14px 28px),
+    #141517;
+}
+.hero figure.shot .plate .mark{color:#fff;opacity:0.16}
+.hero figure.shot figcaption{color:#9AA0A2}
+.hero figure.shot figcaption b{color:#9AA0A2}
+
+.split{display:grid;grid-template-columns:1fr;gap:36px;align-items:start}
+@media (min-width:880px){.split{grid-template-columns:1.05fr 0.95fr;gap:48px}}
+.split figure.shot{max-width:none}
+
+/* ---------- contact ---------- */
+
+.contact{background:var(--black);color:var(--paper)}
+.contact h2{color:var(--paper)}
+.contact p{color:#E6E7E5}
+.contact .big{
+  display:inline-block;
+  font-family:"Poppins",sans-serif;
+  font-weight:600;
+  font-size:clamp(20px,3.4vw,28px);
+  line-height:1.3;
+  color:var(--paper);
+  text-decoration:none;
+  padding:12px 0;
+  min-height:44px;
+  border-bottom:2px solid var(--accent);
+  word-break:break-word;
+}
+.contact .big:hover,.contact .big:focus{color:var(--accent-tint);border-bottom-color:var(--accent-tint)}
+.contact .lines{margin:28px 0 0;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.contact .where{margin:32px 0 0;font-size:15px;color:#9AA0A2}
+
+/* ---------- footer ---------- */
+
+.site-footer{background:var(--black);color:#9AA0A2;padding:36px 0 44px;border-top:1px solid #232527}
+.site-footer .wrap{display:flex;flex-direction:column;gap:20px}
+.site-footer .lockup{color:var(--paper)}
+.site-footer .lockup .mark{width:26px;height:26px}
+.site-footer .lockup .name{font-size:19px}
+.site-footer p{margin:0;font-size:15px;max-width:none}
+.site-footer a{color:#C9CCCA}
+
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:16px;top:10px;position:fixed;background:#fff;color:var(--ink);padding:10px 14px;z-index:99;border-radius:4px}
