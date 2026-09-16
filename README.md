@@ -46,25 +46,50 @@ One placeholder plate remains, in "Who is behind this": a candid portrait of Luc
 
 ### The tree record example image
 
-`img/map-example.webp` is built, not photographed. The base layer is real aerial imagery from the
-USDA NAIP program, which is public domain, pulled from the USGS NAIP Plus ImageServer:
+`img/map-example.webp` is built, not photographed, by
+`scripts/make_map_example.py` in the olaf-assistant repo. The base layer is real aerial imagery
+from the USDA NAIP program, which is public domain, pulled from the USGS NAIP Plus ImageServer.
+This is the exact request:
 
 ```
 https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/ImageServer/exportImage
-  ?bbox=-84.10790,32.89430,-84.10510,32.89660&bboxSR=4326&imageSR=4326
-  &size=870,852&format=png&f=image
+  ?bbox=-84.10763,32.89426,-84.10570,32.89589&bboxSR=4326&imageSR=4326
+  &size=1200,1200&format=png&f=image
 ```
 
 That is a field grown block in middle Georgia, cropped tightly to rows so that no building, road,
 sign, or boundary that could identify a business is in frame. The service reports a native ground
-sample of 0.3 m. The tile was rotated so the rows run vertically, then a window was cropped and
-scaled up about three times, so the base is soft. That is the real limit of public aerial imagery
-at phone zoom.
+sample of 0.3 m. The bounding box is about 180 m on a side and the request asks for 1200 by 1200,
+so the tile comes back at about 0.15 m per pixel, twice native.
 
-Over that base sit the species colored circles, one per tree, placed on rows and tree positions
-detected from the imagery itself, the row labels, the selected tree ring, the record card, and the
-legend. Every number in it is an example and the image is stamped "Example". No Google, Bing,
-Apple, or Mapbox imagery is used anywhere.
+The tile is rotated 27.5 degrees so the planting rows run vertically. That angle is not guessed,
+it is the angle that maximises the variance of the column profile of the vegetation index. A
+400 by 672 pixel window is then cropped out of the rotated tile, which is about 60 m by 101 m of
+ground, small enough that individual crowns are visible and the view is scaled up only 1.7 times.
+
+Crowns are detected from the pixels, not drawn on a grid:
+
+1. Excess green, `2G - R - B` on chromaticity coordinates, is combined with luminance, since the
+   crowns in this scene are both greener and much darker than the bare row middles.
+2. That index is thresholded to a vegetation mask.
+3. Row spacing and phase come from a single frequency fit to the column profile of the index.
+   The fit gives ten rows about 6.0 m apart, which matches the block.
+4. Inside each row band the profile along the row is scanned for local maxima, which are the
+   individual crowns.
+5. Each maximum is refined to an intensity weighted centroid and kept only if the pixels around
+   that centroid are vegetation, so gaps and skips in a row get no dot.
+6. The circle radius comes from the masked area around the centroid, so a bigger crown gets a
+   bigger dot.
+
+That gives 169 trees, ten rows, between ten and twenty two trees a row. Over that base sit the
+species colored circles, the row labels, the selected tree ring, the record card, and the legend.
+Species are assigned by row. Every number in it is an example and the image is stamped "Example".
+No Google, Bing, Apple, or Mapbox imagery is used anywhere.
+
+To rebuild it, run `python3 scripts/make_map_example.py` from the olaf-assistant repo root. It
+caches the NAIP tile under `/tmp/naip-cache` and also writes `map-debug.png` there, a version of
+the crop with an open circle on every detection, which is the thing to look at before shipping a
+change to the detection.
 
 The attribution line "Aerial imagery: USDA NAIP (public domain)" sits under the image on the page
 and must stay with it.
