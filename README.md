@@ -12,9 +12,10 @@ No framework, no build step, no JavaScript, no analytics, no cookies.
 | `fonts/` | Self hosted woff2, latin subsets. Outfit variable (wordmark), Poppins 600 and 700 (headings), Inter 400 (body). |
 | `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png`, `icon-512.png` | The segmented C alone, black on white. |
 | `og.png` | 1200 by 630 link preview card. Black ground, white lockup, one line of text. |
+| `img/` | Four WebP images, each under 150 KB. |
 | `screenshot-1280.png`, `screenshot-375.png` | Local previews only, not pushed. |
 
-Page weight before photos is about 98 KB, fonts included.
+Page weight is about 88 KB before images and about 603 KB with them, fonts included.
 
 ## Brand notes
 
@@ -26,12 +27,53 @@ in nursery green appears once, in the hero, and nowhere else.
 
 The oversized C motif appears once, cropped off the right edge of "What we are building next".
 
-## Photo placeholders
+## Images
 
-Every place the spec calls for a photo currently holds a neutral plate with the shot description
-from the spec shot list. Replace each `<figure class="shot">` plate with an `<img>` at 1600px
-wide, WebP, under 200 KB, with `width`, `height`, `alt`, and `loading="lazy"` on everything except
-the hero. No farm name in any file name or alt text.
+Four images ship with the page and one placeholder remains.
+
+| File | What it is | How it is labeled |
+|---|---|---|
+| `img/rows-render.webp` | Hero. A nursery block from the project's own simulation. | Caption says "Simulation", concept render, not a photograph. |
+| `img/map-example.webp` | The example tree record on a phone. | Caption says "Example", plus the imagery attribution line. |
+| `img/collect-render.webp` | The ground robot moving down a row. | Caption says "Simulation". |
+| `img/ground-robot-render.webp` | The ground robot in a row, front view. | Caption says "Concept render". |
+
+Nothing on the page is presented as a photograph of a real farm. There are no real farm photos on
+this machine yet. When the shot list is shot, the renders should be replaced by the real frames and
+the "Simulation" captions removed.
+
+One placeholder plate remains, in "Who is behind this": a candid portrait of Lucas in the rows.
+
+### The tree record example image
+
+`img/map-example.webp` is built, not photographed. The base layer is real aerial imagery from the
+USDA NAIP program, which is public domain, pulled from the USGS NAIP Plus ImageServer:
+
+```
+https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/ImageServer/exportImage
+  ?bbox=-84.10790,32.89430,-84.10510,32.89660&bboxSR=4326&imageSR=4326
+  &size=870,852&format=png&f=image
+```
+
+That is a field grown block in middle Georgia, cropped tightly to rows so that no building, road,
+sign, or boundary that could identify a business is in frame. The service reports a native ground
+sample of 0.3 m. The tile was rotated so the rows run vertically, then a window was cropped and
+scaled up about three times, so the base is soft. That is the real limit of public aerial imagery
+at phone zoom.
+
+Over that base sit the species colored circles, one per tree, placed on rows and tree positions
+detected from the imagery itself, the row labels, the selected tree ring, the record card, and the
+legend. Every number in it is an example and the image is stamped "Example". No Google, Bing,
+Apple, or Mapbox imagery is used anywhere.
+
+The attribution line "Aerial imagery: USDA NAIP (public domain)" sits under the image on the page
+and must stay with it.
+
+### Replacing images
+
+Export at 1600px wide or less, WebP, under 150 KB each, with `width`, `height`, `alt`, and
+`loading="lazy"` on everything except the hero. Do not use `decoding="async"`, it makes headless
+screenshots capture before the image paints. No farm name in any file name or alt text.
 
 ## Accent color
 

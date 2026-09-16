@@ -190,6 +190,20 @@ section.band .card{background:var(--paper)}
 /* ---------- photo placeholders ---------- */
 
 figure.shot{margin:0;max-width:760px}
+figure.shot img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:6px;
+  border:1px solid var(--hairline);
+  background:var(--band);
+}
+figure.shot.phone-shot{max-width:360px;margin-left:auto;margin-right:auto}
+figure.shot.phone-shot img{border:0;background:transparent;border-radius:0}
+figure.shot .attrib{display:block;margin-top:5px;font-size:13px;color:#8A9095}
+.hero figure.shot img{border-color:#2A2C2E;background:#141517}
+.hero figure.shot .attrib{color:#7E8486}
+
 figure.shot .plate{
   border:1px solid var(--hairline);
   background:
