@@ -82,12 +82,26 @@ and this file are meant to be committed.
 
 ## Hero loop video
 
-`img/hero-loop.mp4` (1920 x 1080, H.264 yuv420p, 12.00 s, 30 fps, 360 frames, no
-audio track, 3.53 MB), `img/hero-loop.webm` (VP9, 3.12 MB) and
-`img/hero-loop-poster.jpg` (1920 x 1080, 243 KB, the last frame before the fade).
+`img/hero-loop.mp4` (1920 x 1080, H.264 yuv420p, **7.80 s**, 30 fps, 234 frames,
+no audio track, 3.37 MB), `img/hero-loop.webm` (VP9, 3.02 MB) and
+`img/hero-loop-poster.jpg` (1920 x 1080, 214 KB, the last held frame).
 The 4K master is kept outside the repo at
 `/home/lucas/UE5/orchard_runs/run_nursery_v4/cinematic/brand_stills_20260916/hero-loop-4k-master.mp4`
-(3840 x 2160, CRF 17, 62 MB).
+(3840 x 2160, CRF 17, 41 MB).
+
+There is no fade in and no fade out. The loop seam is a 0.6 s crossfade instead:
+252 frames are composited, and the delivered 234 frames dissolve their first 18
+from the tail of the source back into the head
+(`out[i] = lerp(src[234+i], src[i], i/18)`), which is continuous both across the
+restart and at the end of the dissolve. The drone holds the same screen position
+throughout, so it does not ghost during the dissolve; what dissolves is the built
+overlay clearing back to a clean field. `build_loop.py` does this.
+
+Timeline: the sweep starts at 0.5 s, every tree is acquired and the counter reads
+**282 / 282** by 6.5 s, and the fully built overlay holds for the last 1.3 s.
+The total is 282 rather than the 300 of the earlier long cut because the shorter
+shot travels over fewer rows; it is still the true number of trees the sweep
+reaches, not a chosen figure.
 
 The rotors spin. The source FBX bakes the props into the airframe, but the same
 asset folder ships a split export, so the hero drone is built from
@@ -103,17 +117,15 @@ the hero drone is built this way; the stills keep the single combined mesh.
 
 The base is a clean MRQ render of `SEQ_HeroGlide` from the same
 `Nursery_BrandGolden_20260916` map and the same lighting as the stills: 35 mm,
-f/5.6, camera 16 m up pitched 40 degrees down, gliding forward along the rows
-from x -20 m to x +10 m and easing to a stop in the last 1.4 seconds so the
-overlay settles before the fade. The drone flies about 7.5 m ahead of and below
-the camera. Rendered at 3840 x 2160 with 16 temporal samples, same as the stills.
-The frame is full of rows at every moment; no world edge is ever visible.
+f/5.6, camera 16 m up pitched 40 degrees down, gliding forward along the rows.
+The drone flies about 7.5 m ahead of and below the camera. Rendered at
+3840 x 2160 with 16 temporal samples, same as the stills. The frame is full of
+rows at every moment; no world edge is ever visible.
 
-The overlay is composited in post by
-`brand_stills_20260916/overlay_hero.py`, so the render itself stays clean. Tree
-marker positions are the level's real world positions, exported by
-`ue_export_trees.py` and projected through the same camera keys the sequence was
-rendered with, so nothing is tracked or estimated.
+The overlay is composited in post by `brand_stills_20260916/overlay_hero.py`, so
+the render itself stays clean. Tree marker positions are the level's real world
+positions, exported by `ue_export_trees.py` and projected through the same camera
+keys the sequence was rendered with, so nothing is tracked or estimated.
 
 The data layer, in the site's palette:
 
@@ -126,21 +138,20 @@ The data layer, in the site's palette:
 - ID tags are white monospace on a 60 percent dark pill, scattered by a
   deterministic hash so no column or band ever tags together, capped at 12 on
   screen at once and kept clear of the counter block.
-- A counter climbs to **300 / 300**, the true number of trees the sweep reaches,
-  with a thin green progress bar under it.
+- A counter climbs to 282 / 282 with a thin green progress bar under it.
 - The base is graded down 8 percent with a 15 percent corner vignette so the data
   layer sits on top without changing the look.
 
 There are no heights, calipers or any other numbers that could read as
 measurements, and no branding anywhere in frame.
 
-It loops cleanly: the first 9 frames fade up from black and the last 18 fade back
-down, so a restart cuts black to black.
-
-Verification frames (start, scan, mid-build, end), extracted from the delivered
-`hero-loop.mp4` and inspected at full size and at 375 px wide:
-`brand_stills_20260916/hero_verify/01_start_0.10s.jpg`,
-`02_scan_1.80s.jpg`, `03_midbuild_5.50s.jpg`, `04_end_11.30s.jpg`, plus drone
-crops at `05_drone_crop_1to1_5.00s.png` and `06_drone_crop_4kmaster_5.00s.png`.
-Rotor crops from the clean render, before any compositing, are in
-`brand_stills_20260916/rotor_check/`.
+Verification, all extracted from the delivered `hero-loop.mp4` and inspected:
+timeline frames in `brand_stills_20260916/hero_verify/` (`01_start_0.03s.jpg`,
+`02_scan_0.70s.jpg`, `03_midbuild_3.50s.jpg`, `04_full_6.60s.jpg`,
+`05_lastheld_7.76s.jpg`), and the seam in
+`brand_stills_20260916/seam_check/` (last three frames `last_01..03.jpg`, first
+three `first_01..03.jpg`, and mid-dissolve `mid_6/9/12/16.jpg`). First and last
+frames measure mean luma 70.4 and 70.8, so neither end goes to black. Rotor
+crops from the clean render, before any compositing, are in
+`brand_stills_20260916/rotor_check/`; drone crops from the finished piece are
+`hero_verify/06_drone_crop_4kmaster_5.00s.png` from the previous cut.
