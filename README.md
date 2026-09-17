@@ -87,17 +87,24 @@ Crowns are detected from the pixels, not drawn on a grid:
 6. The circle radius comes from the masked area around the centroid, so a bigger crown gets a
    bigger dot.
 
-That gives 173 trees, ten rows, between ten and twenty three trees a row. Over that base sit the
-species colored circles, each slightly translucent so the imagery shows through, with a white rim
-and a soft shadow, the selected tree ring, the record card, and the legend. All of that is drawn at
-three times size and scaled down, so the thin rims stay clean. Species are assigned by row, in a
-deliberately calm palette of one deep green, one warm ochre, and one muted terracotta.
+That gives 160 trees, eight rows, between fourteen and twenty five trees a row. Over that base sit
+the species colored circles, each slightly translucent so the imagery shows through, with a white
+rim and a soft shadow, and the selected tree ring. All of that is drawn at three times size and
+scaled down, so the thin rims stay clean. Species are assigned by row, in a deliberately calm
+palette of one deep green, one warm ochre, and one muted terracotta.
 
-The mock is kept deliberately spare. There is no status bar, no wordmark, and no row label strip.
-The header is the block name and one quiet line, the mark sits small in the top right, and the
-record card carries three lines only: the tree ID, the species, and the row and position. Every
-number in it is an example and the image is stamped "Example". The NAIP attribution lives under the
-image on the page, never on the image. No Google, Bing, Apple, or Mapbox imagery is used anywhere.
+The mock is kept deliberately spare. The device is a thin ten pixel bezel with a soft shadow, not a
+black slab. The imagery runs the full height of the screen. The header sits on it as a frosted strip,
+the imagery behind it blurred and blended eighty percent toward white with a hairline under it, and
+reads as one balanced row: a tracked eleven pixel "BLOCK" eyebrow over "B3", then the count and the
+mark on the right, all on one baseline. The record card carries three lines only, the tree ID, the
+species, and the row and position, and the legend is a small floating pill card on the map, so the
+bottom of the screen is imagery rather than a white block. Card and legend share a 16 px radius, the
+same 24 px inset from the screen edge, and the same shadow. Type is Inter everywhere except "B3" and
+the tree ID, which are Poppins SemiBold. The whole interface layer is drawn at three times size and
+scaled down. Every number in it is an example and the image is stamped "Example". The NAIP
+attribution lives under the image on the page, never on the image. No Google, Bing, Apple, or Mapbox
+imagery is used anywhere.
 
 To rebuild it, run `python3 scripts/make_map_example.py` from the olaf-assistant repo root. It
 caches the NAIP tile under `/tmp/naip-cache` and also writes `map-debug.png` there, a version of
