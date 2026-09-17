@@ -79,3 +79,53 @@ re-rendered and are unchanged.
 
 `img/renders/*.png` is in the site repo's `.gitignore`; only the WebP versions
 and this file are meant to be committed.
+
+## Hero loop video
+
+`img/hero-loop.mp4` (1920 x 1080, H.264 yuv420p, 12.03 s, 30 fps, 361 frames, no
+audio track, 3.56 MB), `img/hero-loop.webm` (VP9, 3.13 MB) and
+`img/hero-loop-poster.jpg` (1920 x 1080, 256 KB, the last frame before the fade).
+The 4K master is kept outside the repo at
+`/home/lucas/UE5/orchard_runs/run_nursery_v4/cinematic/brand_stills_20260916/hero-loop-4k-master.mp4`
+(3840 x 2160, CRF 17, 126 MB).
+
+The base is a clean MRQ render of `SEQ_HeroGlide` from the same
+`Nursery_BrandGolden_20260916` map and the same lighting as the stills: 35 mm,
+f/5.6, camera 16 m up pitched 40 degrees down, gliding forward along the rows
+from x -20 m to x +10 m and easing to a stop in the last 1.4 seconds so the
+overlay settles before the fade. The drone flies about 7.5 m ahead of and below
+the camera. Rendered at 3840 x 2160 with 16 temporal samples, same as the stills.
+The frame is full of rows at every moment; no world edge is ever visible.
+
+The overlay is composited in post by
+`brand_stills_20260916/overlay_hero.py`, so the render itself stays clean. Tree
+marker positions are the level's real world positions, exported by
+`ue_export_trees.py` and projected through the same camera keys the sequence was
+rendered with, so nothing is tracked or estimated.
+
+The data layer, in the site's palette:
+
+- A thin bright green sweep line crosses the rows with a soft 40 px gradient
+  trail behind it. Trees light up as it passes.
+- Each tree gets a point-cloud shimmer, a one-frame glitch bracket, then settles
+  to a small green dot; the trees carrying an ID also keep a thin green bracket.
+  Marker strokes are 2 px at 1080p with a soft glow so they hold against bright
+  foliage.
+- ID tags are white monospace on a 60 percent dark pill, scattered by a
+  deterministic hash so no column or band ever tags together, capped at 12 on
+  screen at once and kept clear of the counter block.
+- A counter climbs to **300 / 300**, the true number of trees the sweep reaches,
+  with a thin green progress bar under it.
+- The base is graded down 8 percent with a 15 percent corner vignette so the data
+  layer sits on top without changing the look.
+
+There are no heights, calipers or any other numbers that could read as
+measurements, and no branding anywhere in frame.
+
+It loops cleanly: the first 9 frames fade up from black and the last 18 fade back
+down, so a restart cuts black to black.
+
+Verification frames (start, scan, mid-build, end), extracted from the delivered
+`hero-loop.mp4` and inspected at full size and at 375 px wide:
+`brand_stills_20260916/hero_verify/01_start_0.10s.jpg`,
+`02_scan_1.80s.jpg`, `03_midbuild_5.50s.jpg`, `04_end_11.30s.jpg`.

@@ -281,3 +281,7 @@ figure.shot figcaption b{
 
 .skip{position:absolute;left:-9999px}
 .skip:focus{left:16px;top:10px;position:fixed;background:#fff;color:var(--ink);padding:10px 14px;z-index:99;border-radius:4px}
+
+/* hero video loop */
+.hero figure.shot video{display:block;width:100%;height:auto;border:1px solid #2A2C2E;background:#141517}
+@media (prefers-reduced-motion: reduce){.hero figure.shot video{display:none}.hero figure.shot .hero-still{display:block}}
