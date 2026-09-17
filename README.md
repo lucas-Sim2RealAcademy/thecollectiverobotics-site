@@ -48,24 +48,30 @@ One placeholder plate remains, in "Who is behind this": a candid portrait of Luc
 
 `img/map-example.webp` is built, not photographed, by
 `scripts/make_map_example.py` in the olaf-assistant repo. The base layer is real aerial imagery
-from the USDA NAIP program, which is public domain, pulled from the USGS NAIP Plus ImageServer.
-This is the exact request:
+from the USDA NAIP program, which is public domain, pulled from the USGS NAIP Plus ImageServer at
+its native ground sample. This is the exact request:
 
 ```
 https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/ImageServer/exportImage
   ?bbox=-84.10763,32.89426,-84.10570,32.89589&bboxSR=4326&imageSR=4326
-  &size=1200,1200&format=png&f=image
+  &size=600,600&format=png&f=image
 ```
 
 That is a field grown block in middle Georgia, cropped tightly to rows so that no building, road,
-sign, or boundary that could identify a business is in frame. The service reports a native ground
-sample of 0.3 m. The bounding box is about 180 m on a side and the request asks for 1200 by 1200,
-so the tile comes back at about 0.15 m per pixel, twice native.
+sign, or boundary that could identify a business is in frame. The bounding box is about 180 m on a
+side and the request asks for 600 by 600, which is the native 0.3 m ground sample. Asking the
+server for a bigger raster only gets you its resampling, so the upscale is done here instead.
 
-The tile is rotated 27.5 degrees so the planting rows run vertically. That angle is not guessed,
-it is the angle that maximises the variance of the column profile of the vegetation index. A
-400 by 672 pixel window is then cropped out of the rotated tile, which is about 60 m by 101 m of
-ground, small enough that individual crowns are visible and the view is scaled up only 1.7 times.
+The native tile is scaled up four times with Lanczos, rotated 27.5 degrees so the planting rows run
+vertically, and a window is cropped and scaled back down with Lanczos to the size it is shown at.
+The rotation angle is not guessed, it is the angle that maximises the variance of the column
+profile of the vegetation index. The window is about 60 m by 101 m of ground, small enough that
+individual crowns are visible.
+
+The plate is then finished so it reads as aerial photography rather than as pixels: a self guided
+filter, which smooths the bare ground without softening the crown edges, then a light unsharp mask,
+then a grade of slightly less saturation, gentle contrast, a warm neutral balance, and a very light
+vignette.
 
 Crowns are detected from the pixels, not drawn on a grid:
 
@@ -81,15 +87,18 @@ Crowns are detected from the pixels, not drawn on a grid:
 6. The circle radius comes from the masked area around the centroid, so a bigger crown gets a
    bigger dot.
 
-That gives 169 trees, ten rows, between ten and twenty two trees a row. Over that base sit the
-species colored circles, the row labels, the selected tree ring, the record card, and the legend.
-Species are assigned by row. Every number in it is an example and the image is stamped "Example".
-No Google, Bing, Apple, or Mapbox imagery is used anywhere.
+That gives 173 trees, ten rows, between ten and twenty three trees a row. Over that base sit the
+species colored circles, each with a white rim and a soft shadow, the row labels in pills over a
+gradient scrim, the selected tree ring, the record card, and the legend. All of that is drawn at
+three times size and scaled down, so the thin rims stay clean. Species are assigned by row. Every
+number in it is an example and the image is stamped "Example". No Google, Bing, Apple, or Mapbox
+imagery is used anywhere.
 
 To rebuild it, run `python3 scripts/make_map_example.py` from the olaf-assistant repo root. It
 caches the NAIP tile under `/tmp/naip-cache` and also writes `map-debug.png` there, a version of
 the crop with an open circle on every detection, which is the thing to look at before shipping a
-change to the detection.
+change to the detection. The `?v=` on the image in `index.html` is a cache buster, bump it whenever
+the file is replaced so phones fetch the new one.
 
 The attribution line "Aerial imagery: USDA NAIP (public domain)" sits under the image on the page
 and must stay with it.
