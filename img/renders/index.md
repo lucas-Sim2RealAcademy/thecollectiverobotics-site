@@ -82,12 +82,24 @@ and this file are meant to be committed.
 
 ## Hero loop video
 
-`img/hero-loop.mp4` (1920 x 1080, H.264 yuv420p, 12.03 s, 30 fps, 361 frames, no
-audio track, 3.56 MB), `img/hero-loop.webm` (VP9, 3.13 MB) and
-`img/hero-loop-poster.jpg` (1920 x 1080, 256 KB, the last frame before the fade).
+`img/hero-loop.mp4` (1920 x 1080, H.264 yuv420p, 12.00 s, 30 fps, 360 frames, no
+audio track, 3.53 MB), `img/hero-loop.webm` (VP9, 3.12 MB) and
+`img/hero-loop-poster.jpg` (1920 x 1080, 243 KB, the last frame before the fade).
 The 4K master is kept outside the repo at
 `/home/lucas/UE5/orchard_runs/run_nursery_v4/cinematic/brand_stills_20260916/hero-loop-4k-master.mp4`
-(3840 x 2160, CRF 17, 126 MB).
+(3840 x 2160, CRF 17, 62 MB).
+
+The rotors spin. The source FBX bakes the props into the airframe, but the same
+asset folder ships a split export, so the hero drone is built from
+`SM_M300_Body_NoProps.fbx` plus `Prop_PP.fbx`, whose pivot is its own hub. Four
+prop actors sit at the four motor positions, measured off the airframe mesh by
+`ue_hub_probe.py`, and their yaw is keyed per frame at about 180 to 195 degrees
+per frame with alternating direction per motor. MRQ derives its shutter from the
+post-process motion blur amount, which the stills grade sets to 0; the hero
+camera overrides it to 0.5 for a 180 degree shutter, so the 16 temporal samples
+spread across the shutter and the blades render as blurred discs instead of
+freezing. That shutter also gives the glide its own natural motion blur. Only
+the hero drone is built this way; the stills keep the single combined mesh.
 
 The base is a clean MRQ render of `SEQ_HeroGlide` from the same
 `Nursery_BrandGolden_20260916` map and the same lighting as the stills: 35 mm,
@@ -128,4 +140,7 @@ down, so a restart cuts black to black.
 Verification frames (start, scan, mid-build, end), extracted from the delivered
 `hero-loop.mp4` and inspected at full size and at 375 px wide:
 `brand_stills_20260916/hero_verify/01_start_0.10s.jpg`,
-`02_scan_1.80s.jpg`, `03_midbuild_5.50s.jpg`, `04_end_11.30s.jpg`.
+`02_scan_1.80s.jpg`, `03_midbuild_5.50s.jpg`, `04_end_11.30s.jpg`, plus drone
+crops at `05_drone_crop_1to1_5.00s.png` and `06_drone_crop_4kmaster_5.00s.png`.
+Rotor crops from the clean render, before any compositing, are in
+`brand_stills_20260916/rotor_check/`.
