@@ -88,11 +88,16 @@ Crowns are detected from the pixels, not drawn on a grid:
    bigger dot.
 
 That gives 173 trees, ten rows, between ten and twenty three trees a row. Over that base sit the
-species colored circles, each with a white rim and a soft shadow, the row labels in pills over a
-gradient scrim, the selected tree ring, the record card, and the legend. All of that is drawn at
-three times size and scaled down, so the thin rims stay clean. Species are assigned by row. Every
-number in it is an example and the image is stamped "Example". No Google, Bing, Apple, or Mapbox
-imagery is used anywhere.
+species colored circles, each slightly translucent so the imagery shows through, with a white rim
+and a soft shadow, the selected tree ring, the record card, and the legend. All of that is drawn at
+three times size and scaled down, so the thin rims stay clean. Species are assigned by row, in a
+deliberately calm palette of one deep green, one warm ochre, and one muted terracotta.
+
+The mock is kept deliberately spare. There is no status bar, no wordmark, and no row label strip.
+The header is the block name and one quiet line, the mark sits small in the top right, and the
+record card carries three lines only: the tree ID, the species, and the row and position. Every
+number in it is an example and the image is stamped "Example". The NAIP attribution lives under the
+image on the page, never on the image. No Google, Bing, Apple, or Mapbox imagery is used anywhere.
 
 To rebuild it, run `python3 scripts/make_map_example.py` from the olaf-assistant repo root. It
 caches the NAIP tile under `/tmp/naip-cache` and also writes `map-debug.png` there, a version of
